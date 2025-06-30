@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { ParseIntPipe } from '@nestjs/common';
 import { User } from './user.entity';
 import { CreateUserInput } from './input';
-import { generateGqlResponse, GqlStringResponse } from 'src/graphql-response';
+import { generateGqlResponse, GqlStringResponse } from 'src/gql/graphql-response';
 
 @Resolver(() => User)
 export class UserResolver {

@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { createGqlConfig } from './gql.config';
+import { createGqlConfig } from './gql/gql.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppService } from './app.service';
 import { AppResolver } from './app.resolver';
-import { UserModule } from './user/user.module';
-import { User } from './user/user.entity';
+import { UserModule } from './gql/user/user.module';
+import { User } from './gql/user/user.entity';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { GqlResponseInterceptor } from './gql.response.interceptor';
-import { GraphQLExceptionsFilter } from './excepion.filter';
+import { GqlResponseInterceptor } from './gql/gql.response.interceptor';
+import { GraphQLExceptionsFilter } from './filters/excepion.filter';
 
 @Module({
   imports: [
