@@ -8,6 +8,20 @@ type User {
   email: String
 }
 
+type GqlStringResponse {
+  code: Int!
+  success: Boolean!
+  message: String
+  data: String!
+}
+
+type GqlStringsArrayResponse {
+  code: Int!
+  success: Boolean!
+  message: String
+  data: [String!]!
+}
+
 type GqlUserResponse {
   code: Int!
   success: Boolean!
@@ -15,7 +29,7 @@ type GqlUserResponse {
   data: User!
 }
 
-type GqlundefinedResponse {
+type GqlUsersArrayResponse {
   code: Int!
   success: Boolean!
   message: String
@@ -25,7 +39,9 @@ type GqlundefinedResponse {
 type Query {
   getHello: String!
   getUser(id: Float!): GqlUserResponse!
-  getAllUsers: GqlundefinedResponse!
+  getAllUsers: GqlUsersArrayResponse!
+  getString: GqlStringResponse!
+  getStrings: GqlStringsArrayResponse!
 }
 
 type Mutation {

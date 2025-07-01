@@ -3,7 +3,14 @@ import { UserService } from './user.service';
 import { ParseIntPipe } from '@nestjs/common';
 import { User } from './user.entity';
 import { CreateUserInput } from './input';
-import { generateGqlResponse, GqlStringResponse } from 'src/gql/graphql-response';
+import {
+  generateGqlResponse,
+  GqlStringArrayResponse,
+  GqlStringResponse,
+} from 'src/gql/graphql-response';
+
+const GqlUserResponse = generateGqlResponse(User);
+const GqlUsersResponse = generateGqlResponse([User], true);
 
 @Resolver(() => User)
 export class UserResolver {
@@ -23,7 +30,14 @@ export class UserResolver {
   async createNewUser(@Args('input') createUserInput: CreateUserInput) {
     return await this.userService.createNewUser(createUserInput);
   }
-}
 
-const GqlUserResponse = generateGqlResponse(User);
-const GqlUsersResponse = generateGqlResponse([User]);
+  @Query(() => GqlStringResponse)
+  getString() {
+    return 'string1';
+  }
+
+  @Query(() => GqlStringArrayResponse)
+  getStrings() {
+    return ['string1', 'string2'];
+  }
+}

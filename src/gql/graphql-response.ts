@@ -3,10 +3,12 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 export function generateGqlResponse<T, k>(
   Tclass: ClassType<T> | ClassType<T>[],
   isArray?: k,
-) {
-  let className: string;
-  if (isArray) className = Tclass[0].name;
-  else className = (Tclass as ClassType<T>).name;
+): any {
+  const className = isArray
+    ? `${Tclass[0].name}sArray`
+    : Array.isArray(Tclass)
+      ? `${Tclass[0].name}s`
+      : Tclass.name;
 
   type DataSingleType = {
     data: T;
@@ -14,7 +16,13 @@ export function generateGqlResponse<T, k>(
   type DataTypeAsArray = {
     data: T[];
   };
-  type DataType = k extends boolean ? DataTypeAsArray : DataSingleType;
+  type DataType = T extends string
+    ? 'string'
+    : T extends boolean
+      ? 'boolean'
+      : k extends boolean
+        ? DataTypeAsArray
+        : DataSingleType;
 
   @ObjectType(`Gql${className}Response`)
   abstract class GqlResponse {
@@ -27,7 +35,7 @@ export function generateGqlResponse<T, k>(
     @Field({ nullable: true })
     message?: string;
 
-    @Field(() => (isArray ? [Tclass] : Tclass))
+    @Field(() => Tclass)
     data?: DataType;
   }
 
